@@ -1,0 +1,55 @@
+version: '3.5'
+
+services:
+  mysql:
+    container_name: mysql_container
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-mysql_paswd_2023}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-company_database}
+      MYSQL_USER: ${MYSQL_USER:-angelo}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-@_angelotheman!}
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    container_name: phpmyadmin_container
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-mysql_paswd_2023}
+    ports:
+      - "${PHPMYADMIN_PORT:-8080}:80"
+    networks:
+      - mysql
+    restart: unless-stopped
+
+  mariadb:
+    container_name: mariadb_container
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-mysql_paswd_2023}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-company_database}
+      MYSQL_USER: ${MYSQL_USER:-angelo}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-@_angelotheman!}
+    volumes:
+      - mariadb:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql
+    restart: unless-stopped
+
+networks:
+  mysql:
+    driver: bridge
+
+volumes:
+  mysql:
+  mariadb:
