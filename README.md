@@ -1,2 +1,2 @@
-# Group-08
-Assignment on SQL Queries for Data Engineering Training Program
+## Assignment done By
+- Angel Oduro-Temeng Twumasi <angel@trestleacademyghana.org>
