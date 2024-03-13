@@ -10,11 +10,11 @@ services:
       MYSQL_USER: ${MYSQL_USER:-angelo}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-@_angelotheman!}
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
-      - mysql
+      - mysql_network
     restart: unless-stopped
 
   phpmyadmin:
@@ -30,26 +30,39 @@ services:
       - mysql
     restart: unless-stopped
 
-  mariadb:
-    container_name: mariadb_container
-    image: mariadb:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-mysql_paswd_2023}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-company_database}
-      MYSQL_USER: ${MYSQL_USER:-angelo}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-@_angelotheman!}
-    volumes:
-      - mariadb:/var/lib/mysql
-    ports:
-      - "3307:3306"
-    networks:
-      - mysql
+  mongo_db:
+    container_name: mongodb_container
+    image: mongo:latest
     restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: angelotheman
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo_network
+
+  mongo-express:
+    container_name: mongo-express_container
+    image: mongo-express:latest
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: angelotheman
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    networks:
+      - mongo_network
 
 networks:
   mysql:
     driver: bridge
+  mongo_network:
+    driver: bridge
 
 volumes:
   mysql:
-  mariadb:
+  mongodb_data:
