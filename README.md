@@ -39,3 +39,4 @@ This Compose file contains the following environment variables:
 
 ## Contributors
 * Angel Oduro-Temeng Twumasi <angel@trestleacademyghana.org>
+* Benjamin Kwame Ampah <abenjamin@trestleacademyghana.org>
