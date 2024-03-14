@@ -27,7 +27,7 @@ services:
     ports:
       - "${PHPMYADMIN_PORT:-8080}:80"
     networks:
-      - mysql
+      - mysql_network
     restart: unless-stopped
 
   mongo_db:
@@ -58,11 +58,11 @@ services:
       - mongo_network
 
 networks:
-  mysql:
+  mysql_network:
     driver: bridge
   mongo_network:
     driver: bridge
 
 volumes:
-  mysql:
+  mysql_data:
   mongodb_data:
